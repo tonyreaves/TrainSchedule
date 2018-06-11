@@ -65,12 +65,18 @@ database.ref().on("child_added", function (snapshot) {
     let nextShow = [];
     let tillShow = [];
 
+    trainShow.push(sv.train);
+    destShow.push(sv.destination);
+    freqShow.push(sv.frequency);
+    nextShow.push(sv.nextTrain);
+    tillShow.push(sv.minutesTillTrain)
+
     // Change HTML 
-    $("#train-display").html(sv.train);
-    $("#destination-display").push(sv.destination);
-    $("#frequency-display").push(sv.frequency);
-    // $("#next-arrival-display").push(sv.minutesTillTrain);
-    // $("#minutes-away-display").push(sv.nextTrain);
+    $("#train-display").html(trainShow);
+    $("#destination-display").html(destShow);
+    $("#frequency-display").html(freqShow);
+    $("#next-arrival-display").html(nextShow);
+    $("#minutes-away-display").html(tillShow);
 
 
 
