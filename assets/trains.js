@@ -49,34 +49,37 @@ $("#add-train-btn").on("click", function (event) {
 });
 
 // Firebase watcher 
-database.ref().on("child_added", function (snapshot) {
+database.ref().on("child_added", function (childSnapshot) {
     // storing the snapshot.val()
-    const sv = snapshot.val();
+    // const sv = childSnapshot.val();
 
-    // Console.loging the last user's data
-    console.log(sv.train);
-    console.log(sv.destination);
-    console.log(sv.firstTrain);
-    console.log(sv.frequency);
+    // // Console.loging the last user's data
+    // console.log(sv.train);
+    // console.log(sv.destination);
+    // console.log(sv.firstTrain);
+    // console.log(sv.frequency);
 
-    let trainShow = [];
-    let destShow = [];
-    let freqShow = [];
-    let nextShow = [];
-    let tillShow = [];
+    // Log everything that's coming out of snapshot
+    console.log(childSnapshot.val().train);
+    console.log(childSnapshot.val().destination);
+    console.log(childSnapshot.val().firstTrain);
+    console.log(childSnapshot.val().frequency);
+    console.log(childSnapshot.val().minutesTillTrain);
+    // console.log(childSnapshot.val().joinDate);
 
-    trainShow.push(sv.train);
-    destShow.push(sv.destination);
-    freqShow.push(sv.frequency);
-    nextShow.push(sv.nextTrain);
-    tillShow.push(sv.minutesTillTrain)
+    // full list of items to the well
+    // $("#train-table").append("<div class='table table-hover'><input id='train-display'>" + childSnapshot.val().train +
+    //     " </input>");
+        // <span class='member-email'> " + childSnapshot.val().email +
+        // " </span><span class='member-age'> " + childSnapshot.val().age +
+        // " </span><span class='member-comment'> " + childSnapshot.val().comment + " </span></div>");
 
-    // Change HTML 
-    $("#train-display").html(trainShow);
-    $("#destination-display").html(destShow);
-    $("#frequency-display").html(freqShow);
-    $("#next-arrival-display").html(nextShow);
-    $("#minutes-away-display").html(tillShow);
+// Change HTML 
+// $("#train-display").html(trainShow);
+// $("#destination-display").html(destShow);
+// $("#frequency-display").html(freqShow);
+// $("#next-arrival-display").html(nextShow);
+// $("#minutes-away-display").html(tillShow);
 
 
 
