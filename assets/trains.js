@@ -26,7 +26,7 @@ $("#add-train-btn").on("click", function (event) {
 
     const minutesTillTrain = Number(frequency ) - Number(tRemainder);
 
-    const nextTrain = moment().add(minutesTillTrain, "m");
+    const nextTrain = (currentTime + minutesTillTrain);
     // console.log(train);
     // console.log(destination);
     // console.log(firstTrain);
@@ -52,14 +52,6 @@ $("#add-train-btn").on("click", function (event) {
 
 // Firebase watcher 
 database.ref().on("child_added", function (childSnapshot) {
-    // storing the snapshot.val()
-    // const sv = childSnapshot.val();
-
-    // // Console.loging the last user's data
-    // console.log(sv.train);
-    // console.log(sv.destination);
-    // console.log(sv.firstTrain);
-    // console.log(sv.frequency);
 
     // Log everything that's coming out of snapshot
     console.log(childSnapshot.val().train);
@@ -68,10 +60,10 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val().frequency);
     console.log(childSnapshot.val().minutesTillTrain);
 
-    $("#train-table").append("<div class='table bg-secondary'><id='train-display'><span class='train'>" + childSnapshot.val().train +
-        " </input>"+ "<id='destination-display'><span class='destination'>" + childSnapshot.val().destination +
-        " </span><span class='frequency'> " + childSnapshot.val().frequency +
-        " </span><span class='away'> " + childSnapshot.val().minutesTillTrain + " </span></div>");
+    $("#train-table").append("<div class='table bg-secondary'><td id='train-display'>" + childSnapshot.val().train +
+        " </td>"+ "<td id='destination-display'>" + childSnapshot.val().destination +
+        " </td>" + "<td id='frequency-display'> " + childSnapshot.val().frequency +
+        " </td>" + "<td id='minutes-away-display'> " + childSnapshot.val().minutesTillTrain + " </td></div>");
 
 // Change HTML 
 // $("#train-display").html(trainShow);
@@ -79,8 +71,6 @@ database.ref().on("child_added", function (childSnapshot) {
 // $("#frequency-display").html(freqShow);
 // $("#next-arrival-display").html(nextShow);
 // $("#minutes-away-display").html(tillShow);
-
-
 
     // Handle the errors
 }, function (errorObject) {
