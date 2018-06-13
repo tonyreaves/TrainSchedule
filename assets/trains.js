@@ -22,17 +22,19 @@ $("#add-train-btn").on("click", function (event) {
 
     const diffTime = moment().diff(moment(firstTrainConverted), "minutes");
 
-    const tRemainder = diffTime % frequency;
+    const tRemainder = Number(diffTime) % Number(frequency);
 
-    const minutesTillTrain = frequency - tRemainder;
+    const minutesTillTrain = Number(frequency ) - Number(tRemainder);
 
-    const nextTrain = moment().add(minutesTillTrain, "minutes");
-
-    console.log(train);
-    console.log(destination);
-    console.log(firstTrain);
-    console.log("Minutes till train: " + minutesTillTrain);
+    const nextTrain = moment().add(minutesTillTrain, "m");
+    // console.log(train);
+    // console.log(destination);
+    // console.log(firstTrain);
+    // console.log("Minutes till train: " + minutesTillTrain);
     console.log("Next train " + nextTrain)
+
+    // console.log("FREQ", frequency)
+    // console.log("tRema", tRemainder)
 
     // Code for handling the push
     database.ref().push({
@@ -65,14 +67,11 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val().firstTrain);
     console.log(childSnapshot.val().frequency);
     console.log(childSnapshot.val().minutesTillTrain);
-    // console.log(childSnapshot.val().joinDate);
 
-    // full list of items to the well
-    // $("#train-table").append("<div class='table table-hover'><input id='train-display'>" + childSnapshot.val().train +
-    //     " </input>");
-        // <span class='member-email'> " + childSnapshot.val().email +
-        // " </span><span class='member-age'> " + childSnapshot.val().age +
-        // " </span><span class='member-comment'> " + childSnapshot.val().comment + " </span></div>");
+    $("#train-table").append("<div class='table bg-secondary'><id='train-display'><span class='train'>" + childSnapshot.val().train +
+        " </input>"+ "<id='destination-display'><span class='destination'>" + childSnapshot.val().destination +
+        " </span><span class='frequency'> " + childSnapshot.val().frequency +
+        " </span><span class='away'> " + childSnapshot.val().minutesTillTrain + " </span></div>");
 
 // Change HTML 
 // $("#train-display").html(trainShow);
