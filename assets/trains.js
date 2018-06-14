@@ -22,16 +22,18 @@ $("#add-train-btn").on("click", function (event) {
 
     const diffTime = moment().diff(moment(firstTrainConverted), "minutes");
 
-    const tRemainder = Number(diffTime) % Number(frequency);
+    const tRemainder = (diffTime % frequency);
 
-    const minutesTillTrain = Number(frequency ) - Number(tRemainder);
+    const minutesTillTrain = frequency - tRemainder;
 
-    const nextTrain = (currentTime + minutesTillTrain);
+    const nextCalc = (currentTime + minutesTillTrain);
+
+    const nextTrain = moment(nextCalc).format("HH:mm");
     // console.log(train);
     // console.log(destination);
     // console.log(firstTrain);
     // console.log("Minutes till train: " + minutesTillTrain);
-    console.log("Next train " + nextTrain)
+    console.log("Next train " + nextTrain);
 
     // console.log("FREQ", frequency)
     // console.log("tRema", tRemainder)
@@ -58,20 +60,14 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val().destination);
     console.log(childSnapshot.val().firstTrain);
     console.log(childSnapshot.val().frequency);
-    console.log(childSnapshot.val().minutesTillTrain);
 
-    $("#train-table").append("<div class='table bg-secondary'><td id='train-display'>" + childSnapshot.val().train +
+    $("#train-table").append("<tr class='table bg-secondary'><td id='train-display'>" + childSnapshot.val().train +
         " </td>"+ "<td id='destination-display'>" + childSnapshot.val().destination +
         " </td>" + "<td id='frequency-display'> " + childSnapshot.val().frequency +
-        " </td>" + "<td id='minutes-away-display'> " + childSnapshot.val().minutesTillTrain + " </td></div>");
+        " </td>" + "<td id='next-arrival-display'> " + childSnapshot.val().nextTrain +
+        " </td>" + "<td id='minutes-away-display'> " + childSnapshot.val().minutesTillTrain + " </td></tr>");
 
-// Change HTML 
-// $("#train-display").html(trainShow);
-// $("#destination-display").html(destShow);
-// $("#frequency-display").html(freqShow);
-// $("#next-arrival-display").html(nextShow);
-// $("#minutes-away-display").html(tillShow);
-
+        
     // Handle the errors
 }, function (errorObject) {
     console.log("Errors handled: " + errorObject.code);
